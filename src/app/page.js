@@ -10,11 +10,10 @@ const Home = () => {
   return (
     <div className="bg-black h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 z-0">
-        <BackgroundBeams />
-      </div>
+      {/* <div className="absolute inset-0 z-0"> */}
+      <BackgroundBeams />
+      {/* </div> */}
 
-      {/* Foreground content */}
       <div className="relative z-10 flex flex-col items-center space-y-6">
         <TypewriterEffectSmooth />
         <CustomButton path="/login">Login</CustomButton>
