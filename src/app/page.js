@@ -26,7 +26,7 @@ const Home = () => {
           Login
         </CustomButton>
         <p className="text-white mt-8">
-          Didn't have account?{" "}
+          Didn&apos;t have account?{" "}
           <Link href={"/signUp"} className="text-[#61ff43] underline">
             Sign up
           </Link>
