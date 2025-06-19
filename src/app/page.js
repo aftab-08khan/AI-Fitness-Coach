@@ -5,6 +5,7 @@ import {
   TypewriterEffectSmooth,
 } from "./components/ui/typeWriter";
 import CustomButton from "./components/customButton";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -14,9 +15,22 @@ const Home = () => {
       <BackgroundBeams />
       {/* </div> */}
 
-      <div className="relative z-10 flex flex-col items-center space-y-6">
+      <div className="relative z-10 flex flex-col items-center ">
         <TypewriterEffectSmooth />
-        <CustomButton path="/login">Login</CustomButton>
+        <span className="text-white text-xl font-sora mb-4">
+          Your <span className="text-[#61ff43]">Journey</span>. Your{" "}
+          <span className="text-[#61ff43]">Coach</span>. Your{" "}
+          <span className="text-[#61ff43]">Transformation</span>.
+        </span>
+        <CustomButton path="/login" color={"#61ff43"} hoverColor={"#74ff5b"}>
+          Login
+        </CustomButton>
+        <p className="text-white mt-8">
+          Didn't have account?{" "}
+          <Link href={"/signUp"} className="text-[#61ff43] underline">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -95,7 +95,7 @@ export const TypewriterEffectSmooth = ({
   const wordsArray = [
     { text: "Welcome ", className: "text-white" },
     { text: "to ", className: "text-white" },
-    { text: "Fitness Coach App", className: "text-yellow-500" },
+    { text: "Fitness Coach App", className: "text-[#39ff14]" },
   ].map((word) => ({
     ...word,
     text: word.text.split(""),
@@ -161,7 +161,7 @@ export const TypewriterEffectSmooth = ({
           repeatType: "reverse",
         }}
         className={cn(
-          "block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-yellow-600",
+          "block rounded-sm w-[4px]  h-4 sm:h-6 xl:h-12 bg-[#39ff14]",
           cursorClassName
         )}
       ></motion.span>
