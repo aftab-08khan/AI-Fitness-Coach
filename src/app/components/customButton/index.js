@@ -9,8 +9,6 @@ const CustomButton = ({
   color,
   hoverColor,
 }) => {
-  console.log(path, "color");
-
   return (
     <Link
       href={path}

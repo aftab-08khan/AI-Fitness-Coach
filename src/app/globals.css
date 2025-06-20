@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+  /* Dark Green Shades */
+  --green-100: #39ff14;
+  --green-200: #33e612;
+  --green-300: #2ecc10;
+  --green-400: #28b30e;
+  --green-500: #22990c;
+  --green-600: #1d800a;
+  --green-700: #176608;
+  --green-800: #114c06;
+  --green-900: #0b3304;
+  --green-950: #061902;
+  --black: #000000;
+
+  /* Light Green Shades */
+  --green-light-100: #39ff14;
+  --green-light-200: #4dff2c;
+  --green-light-300: #61ff43;
+  --green-light-400: #74ff5b;
+  --green-light-500: #88ff72;
+  --green-light-600: #9cff8a;
+  --green-light-700: #b0ffa1;
+  --green-light-800: #c4ffb9;
+  --green-light-900: #d7ffd0;
+  --green-light-950: #ebffe8;
+  --white: #ffffff;
+}

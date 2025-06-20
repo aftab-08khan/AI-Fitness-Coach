@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const SignUp = () => {
   const router = useRouter();
-  const handleSubmit = async (e, fullName, email, password) => {
+  const handleSubmit = async (e, email, password) => {
     e.preventDefault();
 
     try {
@@ -18,8 +18,6 @@ const SignUp = () => {
   };
   const handleGoogleSignIn = async () => {
     try {
-      console.log("heello");
-
       await signInWithPopup(auth, googleProvider);
       router.push("/login");
     } catch (error) {
