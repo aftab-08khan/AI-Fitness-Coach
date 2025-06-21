@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+const url = 'https://exercisedb.p.rapidapi.com/exercises?limit=2&offset=0';
+const options = {
+method: 'GET',
+headers: {
+'x-rapidapi-key': '387ec373efmsh432a0004bd56ef8p1208d6jsn62f1f0f86a15',
+'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+}
+};
+const data = async()=>{
+
+try {
+const response = await fetch(url, options);
+const result = await response.json();
+console.log(result);
+} catch (error) {
+console.error(error);
+}
+}
+
+data()
