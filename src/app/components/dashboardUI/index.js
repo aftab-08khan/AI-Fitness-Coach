@@ -128,7 +128,7 @@ const DashboardUI = ({ children }) => {
           </div>
         </div>
 
-        <main className="p-6">{children}</main>
+        <main className="p-6 bg-[--green-950] h-screen">{children}</main>
       </div>
     </>
   );
