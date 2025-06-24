@@ -1,123 +1,117 @@
 "use client";
-import React from "react";
-import {
-  motion,
-  useAnimationFrame,
-  useMotionTemplate,
-  useMotionValue,
-  useTransform,
-} from "motion/react";
-import { useRef } from "react";
-import { cn } from "../../../../lib/utils";
+import { AnimatedButton } from "@/app/components/AnimatedButton";
+import { AnimatedButtonSkeleton } from "@/app/components/ButtonLoader";
+import CustomHeading from "@/app/components/CustomHeading";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
-export function Button({
-  borderRadius = "4.75rem",
-  children,
-  as: Component = "button",
-  containerClassName,
-  borderClassName,
-  duration,
-  className,
-  ...otherProps
-}) {
-  return (
-    <Component
-      className={cn(
-        "relative h-16 w-40 overflow-hidden bg-transparent p-[1px] text-xl",
-        containerClassName
-      )}
-      style={{
-        borderRadius: borderRadius,
-      }}
-      {...otherProps}
-    >
-      <div
-        className="absolute inset-0"
-        style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
-      >
-        <MovingBorder duration={duration} rx="40%" ry="40%">
-          <div
-            className={cn(
-              "h-32 w-32 bg-[radial-gradient(#ebffe8_60%,transparent_80%)] opacity-[0.8] ",
-              borderClassName
-            )}
-          />
-        </MovingBorder>
-      </div>
-      <div
-        className={cn(
-          "relative flex h-full w-full items-center justify-center border border-slate-800 bg-slate-900/[0.8] text-sm text-white antialiased backdrop-blur-xl",
-          className
-        )}
-        style={{
-          borderRadius: `calc(${borderRadius} * 0.96)`,
-        }}
-      >
-        {children}
-      </div>
-    </Component>
-  );
-}
+// Body part images mapping
+const bodyPartImages = {
+  back: "/images/back-workout.jpg",
+  cardio: "/images/cardio-workout.jpg",
+  chest: "/images/chest-workout.jpg",
+  "lower arms": "/images/arms-workout.jpg",
+  "lower legs": "/images/legs-workout.jpg",
+  neck: "/images/neck-workout.jpg",
+  shoulders: "/images/shoulders-workout.jpg",
+  "upper arms": "/images/arms-workout.jpg",
+  "upper legs": "/images/legs-workout.jpg",
+  waist: "/images/abs-workout.jpg",
+};
 
-export const MovingBorder = ({
-  children,
-  duration = 3000,
-  rx,
-  ry,
-  ...otherProps
-}) => {
-  const pathRef = useRef();
-  const progress = useMotionValue(0);
+const Workouts = () => {
+  const url = "https://exercisedb.p.rapidapi.com/exercises/bodyPartList";
+  const options = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPID_API_KEY,
+      "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+    },
+  };
+  const [listOfWorkouts, setListOfWorkouts] = useState(null);
 
-  useAnimationFrame((time) => {
-    const length = pathRef.current?.getTotalLength();
-    if (length) {
-      const pxPerMillisecond = length / duration;
-      progress.set((time * pxPerMillisecond) % length);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setListOfWorkouts(result);
+    } catch (error) {
+      console.error(error);
+    // Fallback data in case API fails
+      setListOfWorkouts([
+        "back",
+        "cardio",
+        "chest",
+        "lower arms",
+        "lower legs",
+        "neck",
+        "shoulders",
+        "upper arms",
+        "upper legs",
+        "waist",
+      ]);
     }
-  });
+  };
 
-  const x = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).x
-  );
-  const y = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).y
-  );
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
+  // Format body part name for display
+  const formatName = (name) => {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
-    <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        className="absolute h-full w-full"
-        width="100%"
-        height="100%"
-        {...otherProps}
-      >
-        <rect
-          fill="none"
-          width="100%"
-          height="100%"
-          rx={rx}
-          ry={ry}
-          ref={pathRef}
-        />
-      </svg>
-      <motion.div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          display: "inline-block",
-          transform,
-        }}
-      >
-        {children}
-      </motion.div>
-    </>
+    <div className="min-h-screen w-full p-4 md:p-8 bg-gradient-to-b from-gray-900 to-gray-800">
+      <div className="max-w-7xl mx-auto">
+        <CustomHeading className="text-white mb-8 text-center">
+          Workout by Body Part
+        </CustomHeading>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {listOfWorkouts?.length > 0 || listOfWorkouts !== null
+            ? listOfWorkouts?.map((workout) => (
+                <Link 
+                  href={`/dashboard/workouts/${workout}`} 
+                  key={workout}
+                  className="group transition-all duration-300 hover:scale-105"
+                >
+                  <div className="relative h-64 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    {/* Background Image */}
+                    <Image
+                      src={bodyPartImages[workout] || "/images/default-workout.jpg"}
+                      alt={workout}
+                      fill
+                      className="object-cover brightness-75 group-hover:brightness-90 transition-all duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-10 transition-all duration-300"></div>
+                    
+                    {/* Content */}
+                    <div className="absolute inset-0 flex items-end p-4">
+                      <AnimatedButton className="w-full bg-opacity-90 bg-gray-800 text-white hover:bg-primary-600">
+                        {formatName(workout)}
+                      </AnimatedButton>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            : Array.from({ length: 8 }).map((_, index) => (
+                <div key={index} className="h-64 rounded-xl overflow-hidden bg-gray-700 animate-pulse">
+                  <AnimatedButtonSkeleton className="w-full h-full" />
+                </div>
+              ))}
+        </div>
+      </div>
+    </div>
   );
 };
+
+export default Workouts;
