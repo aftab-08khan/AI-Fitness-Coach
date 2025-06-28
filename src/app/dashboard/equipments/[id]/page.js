@@ -45,7 +45,7 @@ const SingleEquipmentExercise = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 h-full">
+    <div className="container mx-auto px-4 py-8">
       <CustomButton
         path={"/dashboard/equipments"}
         padding={"6px 16px"}
