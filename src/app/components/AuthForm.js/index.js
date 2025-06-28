@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash, FcGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 import CustomButton from "../customButton";
 
@@ -9,9 +10,10 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
   return (
     <>
-      <div className="pt-12 pl-10">
+      <div className="pt-6 pl-4 sm:pt-10 sm:pl-10">
         <CustomButton path={"/"} padding={"6px 20px"} fontSize={"14px"}>
           Back
         </CustomButton>
@@ -19,11 +21,11 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
 
       <div
         className={`${
-          type === "Sign Up" ? "mt-10" : "mt-20"
-        } flex justify-center items-center`}
+          type === "Sign Up" ? "mt-6 sm:mt-10" : "mt-10 sm:mt-20"
+        } flex justify-center items-center px-4 sm:px-6`}
       >
         <form
-          className="md:w-1/3 md:h-1/2 space-y-8 w-full h-full px-28 md:p-0"
+          className="w-full max-w-md space-y-8"
           onSubmit={(e) => onSubmit(e, email, password)}
         >
           <h2 className="text-2xl font-semibold text-center mb-4 text-[#39ff14]">
@@ -49,7 +51,7 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
               Password
             </label>
             <input
-              type={passwordHidden ? "password" : "name"}
+              type={passwordHidden ? "password" : "text"}
               placeholder="Enter your Password"
               name="password"
               value={password}
@@ -63,7 +65,8 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
               {passwordHidden ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
-          <div className="flex gap-4">
+
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               type="submit"
               className="w-full bg-[#39ff14] text-black py-2 rounded-lg font-semibold hover:bg-lime-400 transition duration-300"
@@ -76,6 +79,7 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
                 onClick={onGoogleSignIn}
                 className="w-full py-2 rounded-md bg-white text-black font-medium hover:bg-gray-200 transition flex items-center justify-center gap-2"
               >
+                <FcGoogle className="text-xl" />
                 {type} with Google
               </button>
             )}

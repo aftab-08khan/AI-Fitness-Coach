@@ -32,7 +32,7 @@ const Workouts = () => {
   return (
     <div className="h-full w-full overflow-auto">
       <CustomHeading>Workouts</CustomHeading>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {listOfWorkouts?.length > 0 || listOfWorkouts !== null
           ? listOfWorkouts?.map((workout) => (
               <Link href={`/dashboard/workouts/${workout}`} key={workout}>

@@ -54,7 +54,8 @@ const DashboardUI = ({ children }) => {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                        onClick={() => setSidebarOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-[--green-400] hover:bg-[--green-900] dark:hover:bg-[--green-light-500]"
                       >
                         <item.icon className="h-5 w-5" />
                         {item.name}
@@ -94,7 +95,7 @@ const DashboardUI = ({ children }) => {
         <div className="px-6 py-4">
           <Link
             href="/dashboard/settings"
-            className="flex items-center gap-3 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-indigo-600"
+            className="flex items-center px-3 py-2 gap-3 text-sm font-medium text-[--green-400] hover:bg-[--green-900] dark:hover:bg-[--green-light-500]"
           >
             <Cog6ToothIcon className="h-5 w-5" />
             Settings
@@ -102,8 +103,8 @@ const DashboardUI = ({ children }) => {
         </div>
       </div>
 
-      <div className="lg:pl-64 min-h-screen bg-gray-50 dark:bg-gray-800">
-        <div className="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-900 shadow">
+      <div className="lg:pl-64 min-h-screen bg-[#020401ec] dark:bg-gray-800">
+        <div className="lg:hidden flex items-center justify-between p-4 bg-[#020401ec] dark:bg-gray-900 shadow">
           <button onClick={() => setSidebarOpen(true)}>
             <Bars3Icon className="h-6 w-6 text-gray-800 dark:text-white" />
           </button>
@@ -128,7 +129,7 @@ const DashboardUI = ({ children }) => {
           </div>
         </div>
 
-        <main className="p-6 bg-[--green-950] h-screen">{children}</main>
+        <main className="p-6 bg-[#020401ec] h-screen">{children}</main>
       </div>
     </>
   );

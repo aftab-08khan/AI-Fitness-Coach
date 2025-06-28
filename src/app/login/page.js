@@ -1,16 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation.js";
 import AuthForm from "../components/AuthForm.js";
-import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-import { auth } from "../../../lib/firebase.js";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../../lib/firebase.js";
 
 const Login = () => {
   const router = useRouter();
-  const provider = new GoogleAuthProvider();
+  const provider = googleProvider;
 
   const handleSubmit = async (e, email, password) => {
     e.preventDefault();
