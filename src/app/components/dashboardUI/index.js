@@ -104,7 +104,7 @@ const DashboardUI = ({ children }) => {
         </div>
       </div>
 
-      <div className="lg:pl-64 h-screen bg-[#020401ec] dark:bg-gray-800">
+      <div className="lg:pl-64 min-h-screen bg-[#020401ec] dark:bg-gray-800">
         <div className="lg:hidden flex items-center justify-between p-4 bg-[#020401ec] dark:bg-gray-900 shadow">
           <button onClick={() => setSidebarOpen(true)}>
             <Bars3Icon className="h-6 w-6 text-gray-800 dark:text-white" />
