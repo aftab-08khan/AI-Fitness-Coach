@@ -1,25 +1,71 @@
 "use client";
-import React from "react";
-import {
-  motion,
-  useAnimationFrame,
-  useMotionTemplate,
-  useMotionValue,
-  useTransform,
-} from "motion/react";
-import { useRef } from "react";
-import { cn } from "../../../../lib/utils";
+import { AnimatedButton } from "@/app/components/AnimatedButton";
+import { AnimatedButtonSkeleton } from "@/app/components/ButtonLoader";
+import CustomHeading from "@/app/components/CustomHeading";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
-export function Button({
-  borderRadius = "4.75rem",
-  children,
-  as: Component = "button",
-  containerClassName,
-  borderClassName,
-  duration,
-  className,
-  ...otherProps
-}) {
+// Body part images mapping
+const bodyPartImages = {
+  back: "/images/back-workout.jpg",
+  cardio: "/images/cardio-workout.jpg",
+  chest: "/images/chest-workout.jpg",
+  "lower arms": "/images/arms-workout.jpg",
+  "lower legs": "/images/legs-workout.jpg",
+  neck: "/images/neck-workout.jpg",
+  shoulders: "/images/shoulders-workout.jpg",
+  "upper arms": "/images/arms-workout.jpg",
+  "upper legs": "/images/legs-workout.jpg",
+  waist: "/images/abs-workout.jpg",
+};
+
+const Workouts = () => {
+  const url = "https://exercisedb.p.rapidapi.com/exercises/bodyPartList";
+  const options = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPID_API_KEY,
+      "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+    },
+  };
+  const [listOfWorkouts, setListOfWorkouts] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url, options);
+      const result = await response.json();
+      setListOfWorkouts(result);
+    } catch (error) {
+      console.error(error);
+      // Fallback data in case API fails
+      setListOfWorkouts([
+        "back",
+        "cardio",
+        "chest",
+        "lower arms",
+        "lower legs",
+        "neck",
+        "shoulders",
+        "upper arms",
+        "upper legs",
+        "waist",
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Format body part name for display
+  const formatName = (name) => {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <Component
       className={cn(
@@ -38,7 +84,7 @@ export function Button({
         <MovingBorder duration={duration} rx="40%" ry="40%">
           <div
             className={cn(
-              "h-42 w-42 bg-[radial-gradient(#ebffe8_60%,transparent_80%)] opacity-[0.8] ",
+              "h-32 w-32 bg-[radial-gradient(#ebffe8_60%,transparent_80%)] opacity-[0.8] ",
               borderClassName
             )}
           />
@@ -46,7 +92,7 @@ export function Button({
       </div>
       <div
         className={cn(
-          "relative flex h-full sm:w-full w-[80%] items-center justify-center border border-slate-800 bg-slate-900/[0.8] text-sm text-white antialiased backdrop-blur-xl",
+          "relative flex h-full w-full items-center justify-center border border-slate-800 bg-slate-900/[0.8] text-sm text-white antialiased backdrop-blur-xl",
           className
         )}
         style={{
@@ -57,67 +103,6 @@ export function Button({
       </div>
     </Component>
   );
-}
-
-export const MovingBorder = ({
-  children,
-  duration = 3000,
-  rx,
-  ry,
-  ...otherProps
-}) => {
-  const pathRef = useRef();
-  const progress = useMotionValue(0);
-
-  useAnimationFrame((time) => {
-    const length = pathRef.current?.getTotalLength();
-    if (length) {
-      const pxPerMillisecond = length / duration;
-      progress.set((time * pxPerMillisecond) % length);
-    }
-  });
-
-  const x = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).x
-  );
-  const y = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).y
-  );
-
-  const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
-
-  return (
-    <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        className="absolute h-full w-full"
-        width="100%"
-        height="100%"
-        {...otherProps}
-      >
-        <rect
-          fill="none"
-          width="100%"
-          height="100%"
-          rx={rx}
-          ry={ry}
-          ref={pathRef}
-        />
-      </svg>
-      <motion.div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          display: "inline-block",
-          transform,
-        }}
-      >
-        {children}
-      </motion.div>
-    </>
-  );
 };
+
+export default Workouts;
