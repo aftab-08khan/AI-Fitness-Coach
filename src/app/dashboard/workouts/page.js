@@ -4,7 +4,6 @@ import { AnimatedButtonSkeleton } from "@/app/components/ButtonLoader";
 import CustomHeading from "@/app/components/CustomHeading";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 // Body part images mapping
 const bodyPartImages = {
@@ -76,7 +75,7 @@ const Workouts = () => {
                 <AnimatedButton>{workout}</AnimatedButton>
               </Link>
             ))
-          : [1, 2, 3, 4, 5, 6].map((item) => (
+          : [1, 2, 3, 4, 5, 6, 7].map((item) => (
               <AnimatedButtonSkeleton key={item} />
             ))}
       </div>

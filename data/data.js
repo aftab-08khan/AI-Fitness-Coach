@@ -1,0 +1,43 @@
+import assistedMachine from "../public/assistedMachine.jpg";
+export const EquipmentsData = [
+  { name: "assisted", img: assistedMachine },
+  { name: "band", img: "/images/equipment/band.png" },
+  { name: "barbell", img: "/images/equipment/barbell.png" },
+  { name: "body weight", img: "/images/equipment/body-weight.png" },
+  { name: "bosu ball", img: "/images/equipment/bosu-ball.png" },
+  { name: "cable", img: "/images/equipment/cable.png" },
+  { name: "dumbbell", img: "/images/equipment/dumbbell.png" },
+  {
+    name: "elliptical machine",
+    img: "/images/equipment/elliptical-machine.png",
+  },
+  { name: "ez barbell", img: "/images/equipment/ez-barbell.png" },
+  { name: "hammer", img: "/images/equipment/hammer.png" },
+  { name: "kettlebell", img: "/images/equipment/kettlebell.png" },
+  {
+    name: "leverage machine",
+    img: "/images/equipment/leverage-machine.png",
+  },
+  { name: "medicine ball", img: "/images/equipment/medicine-ball.png" },
+  { name: "olympic barbell", img: "/images/equipment/olympic-barbell.png" },
+  { name: "resistance band", img: "/images/equipment/resistance-band.png" },
+  { name: "roller", img: "/images/equipment/roller.png" },
+  { name: "rope", img: "/images/equipment/rope.png" },
+  { name: "skierg machine", img: "/images/equipment/skierg-machine.png" },
+  { name: "sled machine", img: "/images/equipment/sled-machine.png" },
+  { name: "smith machine", img: "/images/equipment/smith-machine.png" },
+  { name: "stability ball", img: "/images/equipment/stability-ball.png" },
+  { name: "stationary bike", img: "/images/equipment/stationary-bike.png" },
+  {
+    name: "stepmill machine",
+    img: "/images/equipment/stepmill-machine.png",
+  },
+  { name: "tire", img: "/images/equipment/tire.png" },
+  { name: "trap bar", img: "/images/equipment/trap-bar.png" },
+  {
+    name: "upper body ergometer",
+    img: "/images/equipment/upper-body-ergometer.png",
+  },
+  { name: "weighted", img: "/images/equipment/weighted.png" },
+  { name: "wheel roller", img: "/images/equipment/wheel-roller.png" },
+];

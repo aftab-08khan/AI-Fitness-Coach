@@ -19,11 +19,12 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import LogoutButton from "../LogoutButton";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
   { name: "Workouts", href: "/dashboard/workouts", icon: DumbbellIcon },
-  { name: "Nutrition", href: "/dashboard/nutrition", icon: HeartPulseIcon },
+  { name: "Equipments", href: "/dashboard/equipments", icon: HeartPulseIcon },
   { name: "Progress", href: "/dashboard/progress", icon: MedalIcon },
   { name: "Community", href: "/dashboard/community", icon: UserGroupIcon },
 ];
@@ -103,7 +104,7 @@ const DashboardUI = ({ children }) => {
         </div>
       </div>
 
-      <div className="lg:pl-64 min-h-screen bg-[#020401ec] dark:bg-gray-800">
+      <div className="lg:pl-64 h-screen bg-[#020401ec] dark:bg-gray-800">
         <div className="lg:hidden flex items-center justify-between p-4 bg-[#020401ec] dark:bg-gray-900 shadow">
           <button onClick={() => setSidebarOpen(true)}>
             <Bars3Icon className="h-6 w-6 text-gray-800 dark:text-white" />
@@ -121,7 +122,7 @@ const DashboardUI = ({ children }) => {
               <span className="sr-only">View notifications</span>
               <BellIcon aria-hidden="true" className="h-6 w-6" />
             </button>
-
+            <LogoutButton />
             <div
               aria-hidden="true"
               className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
@@ -129,7 +130,7 @@ const DashboardUI = ({ children }) => {
           </div>
         </div>
 
-        <main className="p-6 bg-[#020401ec] h-screen">{children}</main>
+        <main className="p-6 bg-[#292929ed] h-full">{children}</main>
       </div>
     </>
   );
