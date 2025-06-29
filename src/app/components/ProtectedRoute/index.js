@@ -2,13 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import useAuthListener from "@/hooks/useAuthListener";
+import Loader from "../loader";
 
 export default function ProtectedRoute({ children }) {
   const { user, loading } = useAuthListener();
   const router = useRouter();
 
   if (loading) {
-    return <div className="text-center p-4">Loading...</div>;
+    return <Loader />;
   }
 
   if (!user) {

@@ -22,7 +22,7 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
           className="w-full max-w-md space-y-8"
           onSubmit={(e) => onSubmit(e, email, password)}
         >
-          <h2 className="text-2xl font-semibold text-center text-[#39ff14]">
+          <h2 className="text-2xl font-semibold text-center capitalize text-[#39ff14]">
             {type}
           </h2>
 
@@ -68,7 +68,7 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
               {type}
             </button>
 
-            {onGoogleSignIn && (
+            {/* {onGoogleSignIn && (
               <button
                 type="button"
                 onClick={onGoogleSignIn}
@@ -77,7 +77,7 @@ const AuthForm = ({ type, onSubmit, onGoogleSignIn }) => {
                 <FcGoogle className="text-xl" />
                 {type} with Google
               </button>
-            )}
+            )} */}
           </div>
         </form>
       </div>

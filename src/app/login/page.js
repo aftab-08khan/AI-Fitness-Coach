@@ -7,10 +7,11 @@ import { auth, googleProvider } from "../../../lib/firebase.js";
 
 const Login = () => {
   const router = useRouter();
+  console.log(googleProvider, "googleProvider");
 
   const handleSubmit = async (e, email, password) => {
     e.preventDefault();
-    
+
     // Add input validation
     if (!email || !password) {
       alert("Please enter both email and password");
@@ -18,7 +19,11 @@ const Login = () => {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log("User signed in:", userCredential.user);
       router.push("/dashboard");
     } catch (error) {

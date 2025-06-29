@@ -7,6 +7,7 @@ import { auth } from "../../lib/firebase";
 export default function useAuthListener() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -17,5 +18,5 @@ export default function useAuthListener() {
     return () => unsubscribe();
   }, []);
 
-  return { user, loading };
+  return { user, loading, userData, setUserData };
 }

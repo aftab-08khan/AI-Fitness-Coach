@@ -2,6 +2,7 @@
 import CustomButton from "@/app/components/customButton";
 import ExerciseCards from "@/app/components/ExcerciseCard";
 import { ThreeDCard } from "@/app/components/ThreeDCard";
+import { ThreeDCardSkeleton } from "@/app/components/ThreeDCardLoader";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
@@ -65,9 +66,13 @@ const SingleEquipmentExercise = () => {
         xl:grid-cols-2 
         2xl:grid-cols-3"
       >
-        {exercises?.map((exercise, i) => (
-          <ThreeDCard key={i} data={exercise} />
-        ))}
+        {exercises !== null || exercises?.length > 0
+          ? exercises?.map((exercise, i) => (
+              <ThreeDCard key={i} data={exercise} />
+            ))
+          : [1, 2, 3, 4, 5, , 6, 7].map((item) => {
+              <ThreeDCardSkeleton key={item} />;
+            })}
       </div>
       {/* <div
             key={exercise.id}

@@ -17,9 +17,15 @@ import {
   Menu,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import LogoutButton from "../LogoutButton";
+import UserFormModal from "../userFormModal";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../../../lib/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import useAuthListener from "@/hooks/useAuthListener";
+import { useTheme } from "@/hooks/themeContext";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
@@ -31,14 +37,50 @@ const navigation = [
 
 // function classNames(...classes: string[]) {
 //   return classes.filter(Boolean).join(" ");
+
 // }
 
 const DashboardUI = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const { setUserData } = useTheme();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUser(user);
 
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          setShowModal(true);
+        } else if (userSnap.exists()) {
+          const data = userSnap.data();
+          setUserData(data);
+        } else {
+          console.error("No Data Exisist");
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+  const handleSubmitUserData = async (userData) => {
+    if (!user) return;
+
+    const userRef = doc(db, "users", user.uid);
+    await setDoc(userRef, {
+      ...userData,
+      email: user.email,
+      uid: user.uid,
+      createdAt: new Date(),
+    });
+
+    setShowModal(false); // Close modal after saving
+  };
   return (
     <>
-      {/* Mobile Sidebar */}
       <div className="lg:hidden">
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 flex">
@@ -46,7 +88,7 @@ const DashboardUI = ({ children }) => {
               <div className="flex justify-between items-center mb-6">
                 {/* <Image src={logo} alt="Logo" width={40} height={40} /> */}
                 <button onClick={() => setSidebarOpen(false)}>
-                  <XMarkIcon className="h-6 w-6 text-gray-700 dark:text-white" />
+                  <XMarkIcon className="h-6 w-6 text-gray-500 dark:text-white" />
                 </button>
               </div>
               <nav>
@@ -56,7 +98,7 @@ const DashboardUI = ({ children }) => {
                       <Link
                         href={item.href}
                         onClick={() => setSidebarOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-[--green-400] hover:bg-[--green-900] dark:hover:bg-[--green-light-500]"
+                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-[--green-300] hover:bg-[--green-800] dark:hover:bg-[--green-light-500] hover:text-[--green-100]"
                       >
                         <item.icon className="h-5 w-5" />
                         {item.name}
@@ -84,7 +126,7 @@ const DashboardUI = ({ children }) => {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-[--green-400] hover:bg-[--green-900] dark:hover:bg-[--green-light-500]"
+                  className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-[--green-300] hover:bg-[--green-800] dark:hover:bg-[--green-light-500] hover:text-[--green-100]"
                 >
                   <item.icon className="h-5 w-5" />
                   {item.name}
@@ -104,7 +146,7 @@ const DashboardUI = ({ children }) => {
         </div>
       </div>
 
-      <div className="lg:pl-64 min-h-screen bg-[#020401ec] dark:bg-gray-800">
+      <div className="lg:pl-64 min-h-full bg-[#292929ed]">
         <div className="lg:hidden flex items-center justify-between p-4 bg-[#020401ec] dark:bg-gray-900 shadow">
           <button onClick={() => setSidebarOpen(true)}>
             <Bars3Icon className="h-6 w-6 text-gray-800 dark:text-white" />
@@ -130,8 +172,15 @@ const DashboardUI = ({ children }) => {
           </div>
         </div>
 
-        <main className="p-6 bg-[#292929ed] h-screen">{children}</main>
+        <main className="p-6 h-full">{children}</main>
       </div>
+
+      {showModal && (
+        <UserFormModal
+          onSubmit={handleSubmitUserData}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </>
   );
 };

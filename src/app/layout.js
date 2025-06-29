@@ -1,5 +1,6 @@
 import { Inter, Sora } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/hooks/themeContext";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -15,7 +16,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={sora.className}>{children}</body>
+      <body className={sora.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
